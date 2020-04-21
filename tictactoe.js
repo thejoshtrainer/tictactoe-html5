@@ -14,6 +14,7 @@
 		var squaresFilled = 0;
 		var w;
 		var y;
+		var gameOver = false;
 
 	
 onConfigured = function() {
@@ -46,6 +47,7 @@ onConfigured = function() {
 	
 	
 		function canvasClicked(canvasNumber){
+			if(gameOver==false){
 			thisUser=syncConnector.getMyUserDetails();
 			theCanvas = "canvas"+canvasNumber;
 			c = document.getElementById(theCanvas);
@@ -99,12 +101,12 @@ onConfigured = function() {
 			}
 
 		}
-
+		}
 		function checkForWinners(symbol){
 			
 			for(var a = 0; a < winningCombinations.length; a++){
 			if(content[winningCombinations[a][0]]==symbol&&content[winningCombinations[a][1]]==	symbol&&content[winningCombinations[a][2]]==symbol){
-				//win action goes here
+				gameOver=true
 				
 			}
 			}
@@ -116,33 +118,36 @@ onConfigured = function() {
 				location.reload(true);
 				syncConnector.dispatchSyncMessage("clearall",null,!1)
 				
+				
+		}
+		function playAgain2(){
+
+				location.reload(true);
+				if(document.getElementById("player1b").innerHTML!="Player 1"){locaiton.reload(true);}			
 		}
 
 
 
 		function player1a(){
+			if(document.getElementById("player1b").innerHTML=="Player 1"){
 			if(syncConnector){
 			thisUser=syncConnector.getMyUserDetails();
 			document.getElementById("player1b").innerHTML=thisUser.data.fullName;
 			syncConnector.dispatchSyncMessage("player1p",thisUser.data.fullName,!1);
-			if(document.getElementById("player2b").innerHTML=""){
+			if(document.getElementById("player2b").innerHTML==""){
 			document.getElementById("msgText").innerHTML="Waiting for other player"
-			}else{if(turn=1){document.getElementById("msgText").innerHTML=document.getElementById("player1b").innerHTML+" goes first!"
 			}
-			}
-		}}
+		}}}
 		function player2a(){
+			if(document.getElementById("player2b").innerHTML=="Player 2"){
 			if(syncConnector){
 			thisUser=syncConnector.getMyUserDetails();
 			document.getElementById("player2b").innerHTML=thisUser.data.fullName;
 			syncConnector.dispatchSyncMessage("player2p",thisUser.data.fullName,!1);
-			if(document.getElementById("player1b").innerHTML=""){
+			if(document.getElementById("player1b").innerHTML==""){
 			document.getElementById("msgText").innerHTML="Waiting for other player"
 			}
-			else{if(turn=1){document.getElementById("msgText").innerHTML=document.getElementById("player1b").innerHTML+" goes first!"
-			}
-			}
-		}}
+		}}}
 			
 
 
@@ -151,15 +156,15 @@ syncConnector.allowParticipantPublish("clearall",!0));
 
 function syncMessageReceived(e)
 {
-	var t=e.msgNm,n=e.msgVal
-	
+	var t=e.msgNm;
+	var n=e.msgVal;
 	switch(t)
 	{
 		case"infobox":document.getElementById("msgText").innerHTML=n;
 		break;
 		case"turnbox":turn=e.msgVal;
 		break;
-		case"clearall":playAgain();
+		case"clearall":playAgain2();
 		break;
 		case"player1p":document.getElementById("player1b").innerHTML=n;
 		break;
@@ -260,7 +265,7 @@ function syncMessageReceived(e)
 		c = document.getElementById(theCanvas);
 		canvasNumber=4
 		cxt = c.getContext("2d");
-		if(e.msgVal="X")
+		if(e.msgVal=="X")
 		{
 			cxt.beginPath();
 					cxt.moveTo(10,10);
@@ -290,7 +295,7 @@ function syncMessageReceived(e)
 		c = document.getElementById(theCanvas);
 		canvasNumber=5
 		cxt = c.getContext("2d");
-		if(e.msgVal="X")
+		if(e.msgVal=="X")
 		{
 			cxt.beginPath();
 					cxt.moveTo(10,10);
@@ -320,7 +325,7 @@ function syncMessageReceived(e)
 		c = document.getElementById(theCanvas);
 		canvasNumber=6
 		cxt = c.getContext("2d");
-		if(e.msgVal="X")
+		if(e.msgVal=="X")
 		{
 			cxt.beginPath();
 					cxt.moveTo(10,10);
@@ -350,7 +355,7 @@ function syncMessageReceived(e)
 		c = document.getElementById(theCanvas);
 		canvasNumber=7
 		cxt = c.getContext("2d");
-		if(e.msgVal="X")
+		if(e.msgVal=="X")
 		{
 			cxt.beginPath();
 					cxt.moveTo(10,10);
@@ -380,7 +385,7 @@ function syncMessageReceived(e)
 		c = document.getElementById(theCanvas);
 		canvasNumber=8
 		cxt = c.getContext("2d");
-		if(e.msgVal="X")
+		if(e.msgVal=="X")
 		{
 			cxt.beginPath();
 					cxt.moveTo(10,10);
@@ -410,7 +415,7 @@ function syncMessageReceived(e)
 		c = document.getElementById(theCanvas);
 		canvasNumber=9
 		cxt = c.getContext("2d");
-		if(e.msgVal="X")
+		if(e.msgVal=="X")
 		{
 			cxt.beginPath();
 					cxt.moveTo(10,10);
